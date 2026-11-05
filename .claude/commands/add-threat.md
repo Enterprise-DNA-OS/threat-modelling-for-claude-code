@@ -1,3 +1,7 @@
+---
+description: "Record an assessed design threat"
+---
+
 # Record an assessed design threat
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

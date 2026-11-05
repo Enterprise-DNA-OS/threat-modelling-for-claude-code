@@ -1,3 +1,7 @@
+---
+description: "Make the design review desk yours"
+---
+
 # Make the design review desk yours
 
 Read CLAUDE.md. Read the existing migration and the affected command. Export a private snapshot with npm run threats -- export --file=exports/before-customise.json, choosing a fresh filename. Add a new numbered migration for the requested field, stage or rule. Change the CLI, report definitions and documentation together. Add a test for the actual failure the rule prevents. Run npm test against a disposable database, apply npm run migrate to the selected database, and show a real read command using the change. Never edit an applied migration, remove evidence or weaken an approval rule silently.

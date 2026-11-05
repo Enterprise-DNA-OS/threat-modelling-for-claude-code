@@ -1,3 +1,7 @@
+---
+description: "Review expired or soon-expiring risk decisions"
+---
+
 # Review expired or soon-expiring risk decisions
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

@@ -1,3 +1,7 @@
+---
+description: "Record a trust zone"
+---
+
 # Record a trust zone
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

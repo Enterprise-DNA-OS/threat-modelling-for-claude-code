@@ -1,3 +1,7 @@
+---
+description: "Read one model and its evidence"
+---
+
 # Read one model and its evidence
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

@@ -1,3 +1,7 @@
+---
+description: "Read stale and overdue design reviews"
+---
+
 # Read stale and overdue design reviews
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

@@ -1,3 +1,7 @@
+---
+description: "Write a complete private JSON snapshot"
+---
+
 # Write a complete private JSON snapshot
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

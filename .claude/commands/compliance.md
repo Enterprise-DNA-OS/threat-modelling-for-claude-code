@@ -1,3 +1,7 @@
+---
+description: "Check design-review evidence against documented rules"
+---
+
 # Check design-review evidence against documented rules
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

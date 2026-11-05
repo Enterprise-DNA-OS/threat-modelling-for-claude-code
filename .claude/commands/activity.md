@@ -1,3 +1,7 @@
+---
+description: "Read the recorded activity"
+---
+
 # Read the recorded activity
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

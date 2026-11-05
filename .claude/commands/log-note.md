@@ -1,3 +1,7 @@
+---
+description: "Record a workshop or progress note"
+---
+
 # Record a workshop or progress note
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

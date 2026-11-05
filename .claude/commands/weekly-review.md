@@ -1,3 +1,7 @@
+---
+description: "Draft a review from three current reports"
+---
+
 # Draft a review from three current reports
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

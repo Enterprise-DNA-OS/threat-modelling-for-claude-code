@@ -1,3 +1,7 @@
+---
+description: "Set model scope, owner and review date"
+---
+
 # Set model scope, owner and review date
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

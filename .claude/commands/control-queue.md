@@ -1,3 +1,7 @@
+---
+description: "Read controls still needing verification"
+---
+
 # Read controls still needing verification
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

@@ -1,3 +1,7 @@
+---
+description: "Draft a model review brief"
+---
+
 # Draft a model review brief
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

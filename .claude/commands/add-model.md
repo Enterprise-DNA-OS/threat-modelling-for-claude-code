@@ -1,3 +1,7 @@
+---
+description: "Create a scoped model"
+---
+
 # Create a scoped model
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

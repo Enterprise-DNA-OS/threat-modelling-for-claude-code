@@ -1,3 +1,7 @@
+---
+description: "Read threat scores and dispositions"
+---
+
 # Read threat scores and dispositions
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

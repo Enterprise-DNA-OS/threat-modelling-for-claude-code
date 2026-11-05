@@ -1,3 +1,7 @@
+---
+description: "Close only after verified controls"
+---
+
 # Close only after verified controls
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

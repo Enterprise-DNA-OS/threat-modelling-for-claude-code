@@ -1,3 +1,7 @@
+---
+description: "Record likelihood, impact and ownership"
+---
+
 # Record likelihood, impact and ownership
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

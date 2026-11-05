@@ -1,3 +1,7 @@
+---
+description: "Review flows crossing trust zones"
+---
+
 # Review flows crossing trust zones
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

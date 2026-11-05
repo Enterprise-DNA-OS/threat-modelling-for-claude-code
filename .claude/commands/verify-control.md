@@ -1,3 +1,7 @@
+---
+description: "Record a completed verification"
+---
+
 # Record a completed verification
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

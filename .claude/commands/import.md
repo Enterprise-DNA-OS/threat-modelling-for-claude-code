@@ -1,3 +1,7 @@
+---
+description: "Import an IriusRisk OTM JSON export"
+---
+
 # Import an IriusRisk OTM JSON export
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

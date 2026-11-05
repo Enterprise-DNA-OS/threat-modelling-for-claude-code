@@ -1,3 +1,7 @@
+---
+description: "List commands and flags"
+---
+
 # List commands and flags
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

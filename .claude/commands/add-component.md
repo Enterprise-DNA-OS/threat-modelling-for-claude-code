@@ -1,3 +1,7 @@
+---
+description: "Record a system component"
+---
+
 # Record a system component
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

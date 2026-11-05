@@ -1,3 +1,7 @@
+---
+description: "Assign a control owner and due date"
+---
+
 # Assign a control owner and due date
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

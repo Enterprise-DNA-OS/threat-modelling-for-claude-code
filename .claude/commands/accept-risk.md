@@ -1,3 +1,7 @@
+---
+description: "Record a time-limited authorised risk decision"
+---
+
 # Record a time-limited authorised risk decision
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

@@ -1,3 +1,7 @@
+---
+description: "Assign the reviewed component zone"
+---
+
 # Assign the reviewed component zone
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

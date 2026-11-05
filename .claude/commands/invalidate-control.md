@@ -1,3 +1,7 @@
+---
+description: "Record failed or outdated verification"
+---
+
 # Record failed or outdated verification
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.

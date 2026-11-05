@@ -1,3 +1,7 @@
+---
+description: "Record review evidence for this revision"
+---
+
 # Record review evidence for this revision
 
 Read CLAUDE.md first. Read the current model before changing or drafting its records.
