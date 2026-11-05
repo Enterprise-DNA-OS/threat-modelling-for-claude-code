@@ -1,43 +1,57 @@
-# Threat Modelling for Claude Code: operating instructions
+# Threat Modelling for Claude Code
 
-This file is the brain. Claude Code reads it at the start of every session. It says who this is for, how work gets done, and the one right way to do each recurring job.
+This is the design-review desk for a software business or security consultancy. It records the system, threats, treatment work, verification evidence and risk decisions in one database.
 
-## Who this is for
+## Working rules
 
-- **Business:** [YOUR BUSINESS]
-- **Operator:** [YOUR NAME], [your role]
-- **What matters most:** [the one or two outcomes you care about]
+Read the CLI before making any claim about the records. Run npm run threats -- help for flags. Ask for missing owners, scores, evidence and dates. Read a full model before writing or drafting for it. Every write names an actor. Names here are attribution supplied by the operator, not authenticated identities. Access is controlled by the operating system and database owner connection.
 
-Fill this in once. A worker with context knows. A worker without it guesses.
+Never send, notify, deploy, scan a target, exploit a system, collect credentials or modify an external service. Draft only. Never treat imported statuses as verified controls. A review records the current revision and outstanding issues, not a security approval. Only an authorised human can provide verification or risk acceptance evidence. Never use demo data for a real decision.
 
-## How to work
+## One route per job
 
-1. **Take a brief, not a script.** The operator describes the outcome. You run the right command and present the answer.
-2. **Read before you write.** Before drafting anything about a record, read its full history first.
-3. **Plain language.** Short sentences. No filler. Numbers in tables.
-4. **Silent success, loud problems.** No play-by-play. Say what broke and what you did about it.
-5. **Stop at the line.** Anything that sends, deletes, or faces a customer waits for a yes in this session.
-
-## Routing table: one right way for each recurring job
-
-| When the operator asks for... | Use this |
+| Request | Command |
 |---|---|
-| <!-- TODO(author): one row per slash command --> | `/...` |
+| List commands and flags | /help |
+| Read every model and review state | /models |
+| Set model scope, owner and review date | /update-model |
+| Assign the reviewed component zone | /set-component-zone |
+| Record protocol and data for a flow | /set-flow-context |
+| Assign a control owner and due date | /assign-control |
+| Read one model and its evidence | /model |
+| Review flows crossing trust zones | /trust-boundaries |
+| Read threat scores and dispositions | /threat-register |
+| Read controls still needing verification | /control-queue |
+| Read stale and overdue design reviews | /review-due |
+| Review expired or soon-expiring risk decisions | /acceptance-expiry |
+| Read overdue work and evidence gaps | /attention |
+| Check design-review evidence against documented rules | /compliance |
+| Read the recorded activity | /activity |
+| Create a scoped model | /add-model |
+| Record a trust zone | /add-zone |
+| Record a system component | /add-component |
+| Record data movement | /add-flow |
+| Record an assessed design threat | /add-threat |
+| Assign a mitigation | /add-control |
+| Record likelihood, impact and ownership | /assess-threat |
+| Record a completed verification | /verify-control |
+| Record failed or outdated verification | /invalidate-control |
+| Close only after verified controls | /close-threat |
+| Record a time-limited authorised risk decision | /accept-risk |
+| Record review evidence for this revision | /review-model |
+| Record a workshop or progress note | /log-note |
+| Import an IriusRisk OTM JSON export | /import |
+| Write a complete private JSON snapshot | /export |
+| Draft a review from three current reports | /weekly-review |
+| Draft a threat treatment sheet | /draft-treatment |
+| Draft a model review brief | /draft-review |
+| Change a field or rule | /customise |
+| Add a read-only report | /new-view |
 
-If an ask fits nothing here, run the CLI directly (`npm run <cli> -- --help`) and then propose a new command for it.
+## Storage and operation
 
-## Hard rules
+The one CLI is scripts/threats.mjs. Use DATABASE_URL for Postgres or the embedded database in DATA_DIR. npm run demo applies migrations and seeds invented records. For real use, choose an empty database, run npm run migrate, and import without seeding. Keep imports/, exports/, drafts/, docs-out/ and views/ private. All domain tables enable row-level security and revoke PUBLIC access, but the owner connection bypasses those policies. This is a single trusted-operator tool, not a hosted multi-tenant application.
 
-- Never send email or messages from here. Draft to `drafts/`, a person sends.
-- Never delete records without an explicit yes in this session. Prefer marking closed or archived.
-- Never invent a record. If a name is ambiguous, list the candidates and ask.
-- The database is the source of truth. If the answer is not in it, say so.
+Migrations live in supabase/migrations/. Never change an applied migration. Add a numbered one. Run npm test before and after a change. Back up the database with its native tools and test restores. The JSON snapshot is portable evidence, not an automated restore facility.
 
-## Where things live
-
-- `scripts/` the CLI. `scripts/lib/db.mjs` picks `DATABASE_URL` (Postgres, Supabase) or the embedded database in `.data/`.
-- `supabase/migrations/` the schema, plain SQL. `npm run migrate` applies it.
-- `.claude/commands/` the slash commands. Add one every time the same ask comes twice.
-- `docs/` the thesis and the guide for moving off IriusRisk.
-
-Built by Enterprise DNA. Installed and run for you as part of Omni: https://enterprisedna.co/omni/instead-of/iriusrisk
+Omni by Enterprise DNA can install, customise and run this desk: https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=iriusrisk&utm_medium=agent-doc

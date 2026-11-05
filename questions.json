@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Which high-scoring threats still have no verified controls?",
+    "command": "threat-register"
+  },
+  {
+    "question": "Which data movements cross a trust boundary without a recorded threat?",
+    "command": "trust-boundaries"
+  },
+  {
+    "question": "Which models changed after the last recorded review?",
+    "command": "review-due"
+  },
+  {
+    "question": "Which controls are overdue and who owns them?",
+    "command": "control-queue"
+  },
+  {
+    "question": "Which accepted risks have expired or expire in the next month?",
+    "command": "acceptance-expiry"
+  },
+  {
+    "question": "Which imported controls claim implementation but have no local verification?",
+    "command": "model"
+  },
+  {
+    "question": "Which components have no recorded trust zone?",
+    "command": "compliance"
+  },
+  {
+    "question": "Which threats still lack an owner, a due date or an assessment?",
+    "command": "compliance"
+  },
+  {
+    "question": "Which review evidence covers the current model revision?",
+    "command": "model"
+  },
+  {
+    "question": "Who changed a risk assessment, and what did they record?",
+    "command": "activity"
+  }
+]

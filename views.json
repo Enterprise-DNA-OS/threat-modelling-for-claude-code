@@ -1,13 +1,46 @@
 [
   {
-    "name": "week",
-    "title": "This week",
-    "subtitle": "Threat Modelling for Claude Code: what needs attention, rendered by npm run view",
+    "name": "design-week",
+    "title": "Design review this week",
+    "subtitle": "Internal working paper. Scores and evidence are entered by reviewers. This is not certification that a system is secure.",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Model review state",
+        "sql": "select code,name,owner,next_review,attention,high_open from review_desk order by code"
+      },
+      {
+        "title": "Open high-risk assessments",
+        "sql": "select model,code,name,score,owner,due_on from threat_desk where disposition='open' and score>=60 order by score desc"
+      },
+      {
+        "title": "Controls awaiting evidence",
+        "sql": "select model,code,name,owner,due_on,attention from control_desk where not verified order by due_on nulls first"
+      }
+    ]
+  },
+  {
+    "name": "boundaries",
+    "title": "Trust boundary review",
+    "subtitle": "Internal working paper. Scores and evidence are entered by reviewers. This is not certification that a system is secure.",
+    "sections": [
+      {
+        "title": "Data movements",
+        "sql": "select model,code,source_component,target_component,source_zone,target_zone,boundary,protocol,threats from boundary_desk order by model,code"
+      }
+    ]
+  },
+  {
+    "name": "decisions",
+    "title": "Risk decisions and verification",
+    "subtitle": "Internal working paper. Scores and evidence are entered by reviewers. This is not certification that a system is secure.",
+    "sections": [
+      {
+        "title": "Risk acceptances",
+        "sql": "select model,code,name,accepted_by,acceptance_expires,disposition from threat_desk where acceptance_expires is not null order by acceptance_expires"
+      },
+      {
+        "title": "Verified controls",
+        "sql": "select model,code,name,verifier,verified_on,evidence from control_desk where verified order by model,code"
       }
     ]
   }

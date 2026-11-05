@@ -1,0 +1,129 @@
+{
+  "otmVersion": "0.2.0",
+  "project": {
+    "id": "IMPORT-PORTAL",
+    "name": "Synthetic imported portal",
+    "owner": "Imported owner",
+    "description": "Synthetic design, not a vendor or customer capture"
+  },
+  "trustZones": [
+    {
+      "id": "external",
+      "name": "Outside",
+      "risk": {
+        "trustRating": 0
+      }
+    },
+    {
+      "id": "service",
+      "name": "Service zone",
+      "risk": {
+        "trustRating": 75.5
+      }
+    }
+  ],
+  "assets": [
+    {
+      "id": "account-data",
+      "name": "Account records",
+      "risk": {
+        "confidentiality": 100,
+        "integrity": 80,
+        "availability": 60
+      }
+    }
+  ],
+  "components": [
+    {
+      "id": "browser",
+      "name": "Web browser",
+      "type": "client",
+      "parent": {
+        "trustZone": "external"
+      }
+    },
+    {
+      "id": "api",
+      "name": "Account API",
+      "type": "web-service",
+      "parent": {
+        "trustZone": "service"
+      },
+      "assets": {
+        "processed": [
+          "account-data"
+        ]
+      },
+      "threats": [
+        {
+          "threat": "access",
+          "state": "mitigated",
+          "mitigations": [
+            {
+              "mitigation": "ownership",
+              "state": "implemented"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "worker",
+      "name": "Child worker",
+      "type": "process",
+      "parent": {
+        "component": "api"
+      }
+    }
+  ],
+  "dataflows": [
+    {
+      "id": "request",
+      "name": "Account request",
+      "source": "browser",
+      "destination": "api",
+      "description": "Account reference",
+      "bidirectional": true,
+      "threats": [
+        {
+          "threat": "disclosure",
+          "state": "exposed",
+          "mitigations": []
+        }
+      ]
+    }
+  ],
+  "threats": [
+    {
+      "id": "access",
+      "name": "Cross-account access",
+      "risk": {
+        "likelihood": 75.5,
+        "impact": 90,
+        "likelihoodComment": "Synthetic assessment",
+        "impactComment": "Synthetic private records"
+      },
+      "categories": [
+        "Information Disclosure"
+      ]
+    },
+    {
+      "id": "disclosure",
+      "name": "Request metadata exposed",
+      "risk": {
+        "likelihood": 30,
+        "impact": 40
+      }
+    }
+  ],
+  "mitigations": [
+    {
+      "id": "ownership",
+      "name": "Validate ownership on every lookup",
+      "riskReduction": 80
+    }
+  ],
+  "attributes": {
+    "demo": "Synthetic fixture based on the published OTM schema; not a captured export"
+  }
+}

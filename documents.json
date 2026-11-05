@@ -1,11 +1,58 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
-    "file": "name",
+    "name": "model-review",
+    "title": "Design review working paper",
+    "for_each": "select id,code from models order by code",
+    "file": "code",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Scope and review state",
+        "layout": "record",
+        "note": "Internal working paper. Scores and evidence are entered by reviewers. This is not certification that a system is secure.",
+        "sql": "select code,name,owner,scope,revision,reviewed_revision,next_review,attention from review_desk where id=$1"
+      },
+      {
+        "title": "Assessed threats",
+        "sql": "select code,name,surface,score,owner,due_on,disposition from threat_desk where model_id=$1 order by code"
+      },
+      {
+        "title": "Review evidence",
+        "sql": "select revision,actor,evidence,note,next_review from reviews where model_id=$1 order by created_at"
+      }
+    ]
+  },
+  {
+    "name": "treatment-plan",
+    "title": "Threat treatment plan",
+    "for_each": "select id,code from models order by code",
+    "file": "code",
+    "sections": [
+      {
+        "title": "Proposed controls",
+        "note": "Internal working paper. Scores and evidence are entered by reviewers. This is not certification that a system is secure.",
+        "sql": "select threat_code,code,name,owner,due_on,verified,verifier,evidence from control_desk where model_id=$1 order by threat_code,code"
+      },
+      {
+        "title": "Recorded exceptions",
+        "sql": "select t.code,a.actor,a.reason,a.expires_on,a.evidence from acceptances a join threats t on t.id=a.threat_id where a.model_id=$1 order by a.created_at"
+      }
+    ]
+  },
+  {
+    "name": "boundary-register",
+    "title": "Data flow and boundary register",
+    "for_each": "select id,code from models order by code",
+    "file": "code",
+    "sections": [
+      {
+        "title": "Components",
+        "note": "Internal working paper. Scores and evidence are entered by reviewers. This is not certification that a system is secure.",
+        "sql": "select c.code,c.name,c.kind,z.name as zone from components c left join zones z on z.id=c.zone_id where c.model_id=$1 order by c.code"
+      },
+      {
+        "title": "Data flows",
+        "sql": "select code,name,source_component,target_component,boundary,protocol,data_description,threats from boundary_desk where model_id=$1 order by code"
+      }
     ]
   }
 ]

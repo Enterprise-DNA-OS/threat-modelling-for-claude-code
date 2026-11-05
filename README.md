@@ -1,115 +1,133 @@
-<h1 align="center">Threat Modelling for Claude Code</h1>
+# Threat Modelling for Claude Code
 
-<p align="center">
-  <strong>The open-source threat modelling desk that is just a database and Claude Code.</strong>
-</p>
+Know which design risks remain open, which controls have evidence, and which reviews are out of date. Keep the working history in a database you own.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
+## Three ways to own it
 
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your IriusRisk data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=iriusrisk">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/iriusrisk?utm_source=github&utm_medium=readme&utm_campaign=iriusrisk">How it works</a></td>
-  </tr>
-</table>
+- **Do it yourself:** free MIT-licensed software, operated through Claude Code, Codex, OpenCode or Cursor. Hosting, an agent subscription and your team's time are separate.
+- **We customise it:** Enterprise DNA imports your IriusRisk export, adds your fields and review rules, connects your existing work systems, and builds a web front end or another stack when required. One setup fee, then a retainer for ongoing work.
+- **We run it for you:** Omni by Enterprise DNA installs the desk, manages access and backups, prepares the reviews and maintains your version. One setup fee, then a retainer.
 
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-iriusrisk">Instead of IriusRisk</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
+[Book a 30-minute call with Sam](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=iriusrisk).
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
+## Run the synthetic demo
 
----
+Node 20 or newer. No cloud account or network service is needed for the demo after installing dependencies.
 
-## What is this
-
-Threat Modelling for Claude Code does the job you pay IriusRisk for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the IriusRisk dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays IriusRisk per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=iriusrisk).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
-
-## Quick start
-
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
-
-```bash
-git clone https://github.com/Enterprise-DNA-OS/threat-modelling-for-claude-code.git
-cd threat-modelling-for-claude-code
+```sh
 npm install
+npm test
 npm run demo
+npm run threats -- threat-register
+npm run threats -- trust-boundaries
+npm run threats -- attention
+npm run view
+npm run docs
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+Two invented models include an overdue control, an expired risk acceptance, unscored threats and a component without a trust zone. Repeated seeding preserves edits. For real work, use an empty DATA_DIR or DATABASE_URL, run npm run migrate, and do not seed.
 
-### Use it with your own Postgres or Supabase
+## What it does
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
+Model scope, trust zones, components and data flows underpin a threat register and a mitigation queue. Scores use likelihood times impact divided by 100, with each input between 0 and 100. Missing scores stay unknown. The threshold of 60 for attention is a local demo policy, not an industry standard or a probability estimate. No percentage reduction is inferred from a proposed mitigation.
 
-## The commands
+A threat closes only when every attached control has current verification evidence and at least one control exists. Invalidating a control reopens its closed threat. Risk acceptance needs an actor, rationale, evidence and expiry. A later threat assessment invalidates the earlier acceptance. Expired decisions appear in the review queue.
 
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
+Model reviews record the exact revision considered. Changes to design, threats, controls or decisions advance the revision. A review can record open risks and is never a declaration that the system is secure. Actor names are operator-provided attribution, not electronic signatures.
 
-| Command | What it does |
+## Recurring jobs
+
+| Request | Command |
 |---|---|
-| `/...` | ... |
+| List commands and flags | /help |
+| Read every model and review state | /models |
+| Set model scope, owner and review date | /update-model |
+| Assign the reviewed component zone | /set-component-zone |
+| Record protocol and data for a flow | /set-flow-context |
+| Assign a control owner and due date | /assign-control |
+| Read one model and its evidence | /model |
+| Review flows crossing trust zones | /trust-boundaries |
+| Read threat scores and dispositions | /threat-register |
+| Read controls still needing verification | /control-queue |
+| Read stale and overdue design reviews | /review-due |
+| Review expired or soon-expiring risk decisions | /acceptance-expiry |
+| Read overdue work and evidence gaps | /attention |
+| Check design-review evidence against documented rules | /compliance |
+| Read the recorded activity | /activity |
+| Create a scoped model | /add-model |
+| Record a trust zone | /add-zone |
+| Record a system component | /add-component |
+| Record data movement | /add-flow |
+| Record an assessed design threat | /add-threat |
+| Assign a mitigation | /add-control |
+| Record likelihood, impact and ownership | /assess-threat |
+| Record a completed verification | /verify-control |
+| Record failed or outdated verification | /invalidate-control |
+| Close only after verified controls | /close-threat |
+| Record a time-limited authorised risk decision | /accept-risk |
+| Record review evidence for this revision | /review-model |
+| Record a workshop or progress note | /log-note |
+| Import an IriusRisk OTM JSON export | /import |
+| Write a complete private JSON snapshot | /export |
+| Draft a review from three current reports | /weekly-review |
+| Draft a threat treatment sheet | /draft-treatment |
+| Draft a model review brief | /draft-review |
+| Change a field or rule | /customise |
+| Add a read-only report | /new-view |
 
-## Instead of IriusRisk
+33 CLI commands and 35 slash commands. Use --name=value flags and --json for machine-readable output. Case-insensitive names, partial codes and partial IDs are supported. Ambiguous references print candidates and exit with status 1.
 
-<!-- TODO(author): how to bring data across from IriusRisk; link docs/replace-iriusrisk.md -->
+## Ten questions to ask your own records
 
-## Architecture
+1. Which high-scoring threats still have no verified controls? (threat-register)
+2. Which data movements cross a trust boundary without a recorded threat? (trust-boundaries)
+3. Which models changed after the last recorded review? (review-due)
+4. Which controls are overdue and who owns them? (control-queue)
+5. Which accepted risks have expired or expire in the next month? (acceptance-expiry)
+6. Which imported controls claim implementation but have no local verification? (model)
+7. Which components have no recorded trust zone? (compliance)
+8. Which threats still lack an owner, a due date or an assessment? (compliance)
+9. Which review evidence covers the current model revision? (model)
+10. Who changed a risk assessment, and what did they record? (activity)
 
+These are real analyses supported by this build. They are not a claim that IriusRisk cannot produce similar answers. Ownership lets your team extend the joins, policies and reports itself.
+
+## Your first hour: ten things to ask for
+
+1. Put our business name and colours in brand.json.
+2. Show the models due for review.
+3. Show data movements crossing a trust boundary.
+4. Show high-scoring threats without verified controls.
+5. List expired risk acceptances.
+6. Draft the Monday review from the current reports.
+7. Preview our IriusRisk OTM JSON export.
+8. Compare imported component, flow and threat counts with the source.
+9. Add our internal service code with a tested migration.
+10. Export a private snapshot before changing a policy.
+
+## Bring your IriusRisk records
+
+```sh
+npm run threats -- import iriusrisk --file=imports/project.otm.json --dry-run --actor="Your name"
+npm run threats -- import iriusrisk --file=imports/project.otm.json --actor="Your name"
 ```
-threat-modelling-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
-```
 
-## Built for coding agents
+[The replace guide](docs/replace-iriusrisk.md) documents the vendor's export route and the exact mapping. The import retains the full original JSON and all extra attributes. Repeating the identical file is a no-op. A changed file cannot overwrite a working model. Imported threats remain open and implementation claims remain unverified until reviewed locally. The supplied fixture is synthetic, not a captured vendor account.
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+## Documents and read-only views
 
-## Contributing
+Three branded HTML reports show the design week, trust boundaries and decisions. Three document types produce a model review paper, a treatment plan and a boundary register per model. Edit brand.json, then run npm run view or npm run docs. Draft commands write private Markdown files. All outputs stay local and send nothing.
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+## Compliance and scope
 
-## Want it installed and run for you?
+[Evidence checks](docs/compliance.md) follow selected NIST SSDF and OWASP threat-modelling practices. They flag missing context, unreviewed changes, missing verification and stale exceptions. This desk does not certify compliance, generate a complete threat model automatically, validate a live system, or replace an authorised security reviewer.
 
-Enterprise DNA installs Threat Modelling for Claude Code for your business, migrates your IriusRisk data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+IriusRisk also supplies its maintained threat libraries, automatic threat generation, interactive diagrams, integrations and enterprise access controls. This free base is an independently authored review workflow, with no vendor libraries or code. [Why no front end](docs/why-no-front-end.md) sets out the limits. Scope integrations and access controls before replacing a live team service.
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=iriusrisk)
-- Read more: [enterprisedna.co/omni/instead-of/iriusrisk](https://enterprisedna.co/omni/instead-of/iriusrisk?utm_source=github&utm_medium=readme&utm_campaign=iriusrisk)
+The database uses a trusted owner connection. Restrict operating-system and database access, keep reports and exports private, and maintain native backups. Do not store credentials in model records. A JSON export includes all operational records and original import payloads, but no restore command is included.
 
-## License
+## Verification and licence
 
-MIT. Copyright (c) 2026 Enterprise DNA.
+npm test uses a disposable database and output folder, exercises every CLI command and tests imports, evidence, state changes, dates and HTML escaping. CI includes Windows and Ubuntu with Node 20 and 22, and PostgreSQL 16. TEST_DATABASE_URL must name an empty disposable database.
+
+[Research and scores](docs/research.md). MIT licence. Copyright 2026 Enterprise DNA. IriusRisk is a third-party product. This project is independent and contains no vendor assets or threat libraries.
